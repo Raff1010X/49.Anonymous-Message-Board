@@ -35,19 +35,16 @@ exports.replyGet = async (req, res) => {
 
 exports.replyPut = async (req, res) => {
   const { reply_id } = req.body
-  let reply = await Reply.findOneAndUpdate({ reply_id }, {reported: true})
-  if(!reply){
-    console.log({ error: "reply not found" })
-    return
-  }
-  res.send("reported")
+  let reply = await Reply.findOneAndUpdate({ _id: reply_id }, {reported: true})
+  if(reply)
+    res.send("reported")
 }
 
 exports.replyDel = async (req, res) => {
   const { reply_id, delete_password } = req.body
   let reply = await Reply.findById(reply_id)
   if(!reply){
-    console.log({ error: "reply not found" })
+    res.send("reply not found")
     return
   }
 
