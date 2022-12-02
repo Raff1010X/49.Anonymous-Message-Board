@@ -23,14 +23,10 @@ exports.threadGet = async (req, res) => {
     .select('-reported -delete_password -__v')
   
   threads = threads.map(el => {
-    el.replies = el.replies.sort((a, b) => {
-      return new Date(b.created_on) - new Date(a.created_on)
-    })  
     el.replies = el.replies.map(re => {
       return {_id: re._id, thread_id: re.thread_id, text: re.text,  created_on: re.created_on}
     })
-    if (el.replies.length > 3) 
-      el.replies = el.replies.slice(0, 3)
+    .slice(0, 3)
     return el
   })
   res.json(threads)
