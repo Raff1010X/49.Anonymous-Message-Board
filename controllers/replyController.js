@@ -28,9 +28,6 @@ exports.replyGet = async (req, res) => {
   thread.replies = thread.replies.map(el => {
       return {_id: el._id, thread_id: el.thread_id, text: el.text,  created_on: el.created_on}
   })
-  thread.replies = thread.replies.sort((a, b) => {
-      return new Date(b.created_on) - new Date(a.created_on)
-  })
   res.json(thread)
 }
 
